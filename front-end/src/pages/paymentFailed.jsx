@@ -1,6 +1,6 @@
 import React from 'react'
 
-const paymentFailed = () => {
+const PaymentFailed = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center">
       <div className="bg-white rounded-2xl shadow-xl p-8 max-w-md mx-4">
@@ -24,4 +24,4 @@ const paymentFailed = () => {
   )
 }
 
-export default paymentFailed
+export default PaymentFailed
