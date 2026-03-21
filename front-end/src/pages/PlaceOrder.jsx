@@ -109,7 +109,12 @@ const PlaceOrder = () => {
 
           } catch (error) {
             console.log(error)
-            toast.error(error.response?.statusText || "Something went wrong");
+            if (error.response.data.message == "No token") {
+              toast.error("Please Login/SignUp First")
+            }
+            else {
+              toast.error(error.response.statusText || "Something went wrong");
+            }
 
 
           }
@@ -308,11 +313,11 @@ const PlaceOrder = () => {
       <div className='flex-col py-1 m-2 sm:w-[550px]'>
         <h1 className='font-[BioRhyme] text-[22px] pt-8 pb-3 px-2'>YOUR ITEMS</h1>
         <div className='grid grid-cols-4 sm:grid-cols-5'>
-          
+
           {items.map((item, index) => (
             <div
               key={index}
-              className="bg-white p-4 mb-8 shadow-md" 
+              className="bg-white p-4 mb-8 shadow-md"
             >
               <div className='flex flex-col gap-2'>
                 <img
