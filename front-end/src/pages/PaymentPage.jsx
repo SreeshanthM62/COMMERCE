@@ -2,7 +2,7 @@ import React from 'react'
 import { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { load } from "@cashfreepayments/cashfree-js"
-import PaymentFailed from '../pages/paymentFailed'
+import paymentFailed from './paymentFailed'
 
 
 const PaymentPage = () => {

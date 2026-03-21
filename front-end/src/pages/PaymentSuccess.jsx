@@ -3,7 +3,7 @@ import { useState, useEffect, useContext } from 'react';
 import { ShopContext } from '../context/ShopContext'
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import axios from "axios";
-import PaymentFailed from '../pages/paymentFailed'
+import paymentFailed from './paymentFailed'
 
 const PaymentSuccess = () => {
 
@@ -55,7 +55,7 @@ if (!token) {
                 
             } else {
                 setError(data.message || "Payment verification failed");
-                <PaymentFailed/>
+                <paymentFailed/>
             }
 
         } catch {
@@ -88,7 +88,7 @@ if (!token) {
                         </div>
                         {/* <h2 className="text-2xl font-semibold text-gray-800 mb-2">Payment Error</h2>
                         <p className="text-gray-600 mb-6">{error}</p> */}
-                        <PaymentFailed/>
+                        <paymentFailed/>
 
                         <button
                             onClick={() => window.location.href = '/cart'}
