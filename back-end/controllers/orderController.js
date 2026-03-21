@@ -123,8 +123,8 @@ const placeOrderCashFreePayment = async (req, res) => {
                 customer_email: address.email
             },
             order_meta: {
-                return_url: `http://localhost:5173/payment-success?order_id=${orderId}`,
-                notify_url: `https://unfeted-brody-unlocated.ngrok-free.dev/api/order/payment/webhook`,
+                return_url: `https://twistnbloomco.vercel.app/payment-success?order_id=${orderId}`,
+                notify_url: `https://twistnbloom-backend.vercel.app/api/order/payment/webhook`,
                 payment_methods: "cc,dc,upi"
             },
         };
@@ -498,8 +498,8 @@ const retryCashFreePayment = async (req, res) => {
                 customer_email: existingOrder.address.email
             },
             order_meta: {
-                return_url: `http://localhost:5173/payment-success?order_id=${newOrderId}`,
-                notify_url: `https://unfeted-brody-unlocated.ngrok-free.dev/api/order/payment/webhook`,
+                return_url: `https://twistnbloomco.vercel.app/payment-success?order_id=${newOrderId}`,
+                notify_url: `https://twistnbloom-backend.vercel.app/api/order/payment/webhook`,
                 payment_methods: "cc,dc,upi"
             },
         };
