@@ -1,0 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400..900;1,400..900&family=Arizonia&family=BioRhyme:wght@200..800&family=Cardo:ital,wght@0,400;0,700;1,400&family=Chivo:ital,wght@0,100..900;1,100..900&family=Edu+NSW+ACT+Cursive:wght@400..700&family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=Inknut+Antiqua:wght@300;400;500;600;700;800;900&family=Jost:ital,wght@0,100..900;1,100..900&family=Lora:ital,wght@0,400..700;1,400..700&family=Luxurious+Roman&family=Neuton:ital,wght@0,200;0,300;0,400;0,700;0,800;1,400&family=Pacifico&family=Playfair+Display+SC:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+@import "tailwindcss";
+
+
+.title h1{
+    color: #FF69B4;
+    font-family: "Arizonia", cursive;
+    font-weight: bolder;
+    font-style: normal;
+}
+
+.active{
+    background-color: #ffebf5;
+    border-color: #C586A5
+}
+
+@layer components {
+  .input-field {
+    @apply w-full rounded-md border border-gray-300 px-4 py-3
+           text-sm text-gray-700 placeholder-gray-400
+           focus:border-pink-500 focus:ring-1 focus:ring-pink-500
+           outline-none transition;
+  }
+}
