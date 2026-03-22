@@ -32,7 +32,7 @@ const PaymentPage = () => {
   const initializePayment = async () => {
     try {
 
-      const cashfree = await load({ mode: "production" })
+      const cashfree = await load({ mode: "sandbox" })
 
       const checkoutoptions = {
         paymentSessionId: paymentSessionId,
