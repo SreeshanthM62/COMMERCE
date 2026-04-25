@@ -3,6 +3,8 @@ import { Routes, Route } from "react-router-dom"
 import Home from './pages/Home'
 import About from './pages/About'
 import Contact from './pages/Contact'
+import TermsAndConditions from './pages/TermsAndConditions'
+import Refund from './pages/Refund'
 import Login from './pages/Login'
 import AllProducts from './pages/AllProducts'
 import Cart from './pages/Cart'
@@ -36,6 +38,8 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
+        <Route path="/refund-policy" element={<Refund />} />
         <Route path="/login" element={<Login />} />
         <Route path="/all-products" element={<AllProducts />} />
         <Route path="/cart" element={<Cart />} />
