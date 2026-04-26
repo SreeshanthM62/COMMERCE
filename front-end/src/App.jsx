@@ -31,10 +31,11 @@ const App = () => {
         position="top-right"
         autoClose={2000}
         theme="colored" />
+      <Alert />
       <ScrollToTop />
       <Navbar />
       <SearchBar />
-      <Alert />
+      
 
       <Routes>
         <Route path="/" element={<Home />} />
