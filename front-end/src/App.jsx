@@ -21,6 +21,7 @@ import SearchBar from './components/SearchBar'
 import ScrollToTop from './context/ScrollToTop'
 import { ToastContainer, toast } from 'react-toastify';
 import Profile from './pages/Profile'
+import Alert from './components/Alert'
 
 
 const App = () => {
@@ -33,6 +34,7 @@ const App = () => {
       <ScrollToTop />
       <Navbar />
       <SearchBar />
+      <Alert />
 
       <Routes>
         <Route path="/" element={<Home />} />
