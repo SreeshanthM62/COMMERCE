@@ -570,7 +570,14 @@ const autoCancelOrders = () => {
         } catch (error) {
             console.error("Auto cancel error:", error.message);
         }
-    });
+    },
+
+    {
+        timezone: "Asia/Kolkata"
+    }
+
+
+);
 };
 
 // ALl orders data for admin panel
