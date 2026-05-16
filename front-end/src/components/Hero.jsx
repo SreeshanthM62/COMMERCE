@@ -103,22 +103,22 @@ const Hero = () => {
         .slide-heading-line:nth-child(3) { animation-delay: 0.28s; }
 
         /* ─────────────────────────────────────────
-           DESKTOP: side-by-side split, compact height
+           DESKTOP: side-by-side split
            ───────────────────────────────────────── */
         .hero-split {
           display: flex;
           flex-direction: row;
           width: 100%;
-          height: 68vh;          /* matches your original 65-70vh feel */
-          max-height: 600px;     /* never taller than 600px on big screens */
-          min-height: 420px;     /* never collapses too small */
+          height: 75vh;
+          max-height: 680px;
+          min-height: 460px;
           background: linear-gradient(140deg, #130009 0%, #2b001a 55%, #190010 100%);
           overflow: hidden;
         }
 
         /* LEFT — text panel */
         .hero-split__left {
-          flex: 0 0 52%;
+          flex: 0 0 50%;
           display: flex;
           flex-direction: column;
           justify-content: center;
@@ -128,36 +128,36 @@ const Hero = () => {
           overflow: hidden;
         }
 
-        /* RIGHT — image panel, portrait shown from top */
+        /* RIGHT — image panel.
+           object-fit: contain so the FULL portrait is always visible, zero cropping.
+           Dark bg fills any gap around the image naturally.              */
         .hero-split__right {
-          flex: 0 0 48%;
+          flex: 0 0 50%;
           position: relative;
           overflow: hidden;
+          background: #0e0008;
+          display: flex;
+          align-items: center;
+          justify-content: center;
         }
 
         .hero-split__img {
           width: 100%;
           height: 100%;
-          object-fit: cover;
-          object-position: center top;   /* show top of portrait = flowers */
+          object-fit: contain;
+          object-position: center center;
           display: block;
           animation: zoomIn 5s ease forwards;
         }
 
-        /* Soft left-edge blend */
+        /* Soft left-edge blend into dark left panel */
         .hero-split__right::before {
           content: '';
           position: absolute; inset: 0;
-          background: linear-gradient(to right, #190010 0%, transparent 22%);
+          background: linear-gradient(to right, #130009 0%, transparent 18%);
           z-index: 1; pointer-events: none;
         }
-        /* Light tint */
-        .hero-split__right::after {
-          content: '';
-          position: absolute; inset: 0;
-          background: rgba(15, 0, 10, 0.15);
-          z-index: 1; pointer-events: none;
-        }
+        .hero-split__right::after { content: none; }
 
         /* Thumbnail strip */
         .hero-thumbs {
