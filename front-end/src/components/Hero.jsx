@@ -144,7 +144,7 @@ const Hero = () => {
         .hero-split__img {
           width: 100%;
           height: 100%;
-          object-fit: contain;
+          object-fit: cover;
           object-position: center center;
           display: block;
           animation: zoomIn 5s ease forwards;
@@ -368,7 +368,6 @@ const Hero = () => {
                   <path d="M5 12h14M12 5l7 7-7 7" />
                 </svg>
               </a>
-              <a href="#customize" className="hero-btn-ghost">✨ Customise Yours</a>
             </div>
 
             {/* Stats — compact */}
@@ -377,18 +376,7 @@ const Hero = () => {
               animation: 'fadeUp 0.7s 0.75s ease both',
               flexWrap: 'wrap',
             }}>
-              {[['500+', 'Happy Customers'], ['100%', 'Handmade'], ['7+', 'Collections']].map(([n, l]) => (
-                <div key={l}>
-                  <div style={{
-                    fontFamily: "'Cormorant Garamond', serif",
-                    fontSize: 22, fontWeight: 700, color: '#ff69b4',
-                  }}>{n}</div>
-                  <div style={{
-                    fontSize: 10, color: 'rgba(255,255,255,0.5)',
-                    letterSpacing: '0.06em', marginTop: 1,
-                  }}>{l}</div>
-                </div>
-              ))}
+              
             </div>
           </div>
 
