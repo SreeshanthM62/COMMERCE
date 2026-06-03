@@ -2,8 +2,17 @@ import React from 'react'
 
 const Alert = () => {
   return (
-    <div className='sticky top-0 z-50'>
-      <h1 className='text-red-700 text-center font-extrabold'>!!!!!! THIS WEBSITE IS UNDER CONSTRUCTION, DO NOT ORDER THROUGH WEBSITE, ORDER THROUGH INSTAGRAM FOR NOW !!!!!!</h1>
+    <div className='w-full bg-pink-100 text-pink-700 text-xs sm:text-sm font-medium py-2 px-4 text-center border-b border-pink-200 sticky top-0 z-50 transition-all'>
+     <p>
+      The Website is coming soon✨. So, for now please order through
+      <a
+        href = 'https://ig.me/m/_twistnbloom.co'
+        target = '_blank'
+        rel = 'noopener noreferrer'
+        className='underline font-bold hover:text-pink-900 inline-flex items-center gap-1'>
+        Instagram DM 💌
+      </a>
+     </p>
     </div>
   )
 }
