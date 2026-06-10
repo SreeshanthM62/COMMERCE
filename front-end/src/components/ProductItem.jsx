@@ -4,9 +4,9 @@ import { Link } from "react-router-dom"
 
 const ProductItem = ({ id, image, name, price }) => {
 
-    const opt_image = image.replace("/upload/", "/upload/f_auto,q_auto,w_500/")
+    const opt_image = image[0]?.replace("/upload/", "/upload/f_auto,q_auto,w_500/")
 
-    const { currency,addToCart } = useContext(ShopContext)
+    const { currency,addToCart} = useContext(ShopContext)
     return (
     <div className='flex flex-col justify-between'>
       <Link className="cursor-pointer" to={`/product/${id}`}>
