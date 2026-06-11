@@ -76,7 +76,7 @@ const Product = () => {
           <div className="flex-1">
             <img
               src={image}
-              className="w-full h-full hover:scale-105 object-cover"
+              className="aspect-4/5 hover:scale-105 object-cover"
               alt=""
             />
           </div>
