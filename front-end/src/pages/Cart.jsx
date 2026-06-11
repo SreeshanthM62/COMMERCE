@@ -2,6 +2,7 @@ import React, { useContext, useState, useEffect } from 'react'
 import { ShopContext } from '../context/ShopContext'
 import { assets } from '../assets/assets'
 import CartTotal from '../components/CartTotal'
+import { toast } from 'react-toastify'
 
 const Cart = () => {
 
@@ -85,7 +86,7 @@ const Cart = () => {
         <div className=' flex flex-col items-center justify-end'>
           <CartTotal />
           <div className='text-end '>
-            <button onClick={() => navigate("/place-order")} className='bg-black text-white cursor-pointer px-8 py-3'>PROCEED TO CHECKOUT</button>
+            <button onClick={() => cartData.length > 0 ?navigate("/place-order"): toast.error("Please Add Items in Cart")} className='bg-black text-white cursor-pointer px-8 py-3'>PROCEED TO CHECKOUT</button>
           </div>
         </div>
       </div>
