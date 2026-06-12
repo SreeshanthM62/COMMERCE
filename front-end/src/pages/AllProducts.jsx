@@ -9,66 +9,63 @@ import ProductItem from '../components/ProductItem'
 
 const AllProducts = () => {
 
-  const { products, search,showSearch } = useContext(ShopContext)
+  const { products, search, showSearch } = useContext(ShopContext)
 
   const [showFilter, setShowFilter] = useState(false)
   const [filterProducts, setFilterProducts] = useState([])
   const [category, setCategory] = useState([])
   const [subCategory, setSubCategory] = useState([])
-  
+
 
 
   useEffect(() => {
     setFilterProducts(products)
   }, [])
 
-  useEffect(()=>{
+  useEffect(() => {
     applyFilter()
-  },[category,subCategory, search,showSearch,products])
+  }, [category, subCategory, search, showSearch, products])
 
- 
 
-  const toggleCategory = (e)=>{
-    if(category.includes(e.target.value)){
-      setCategory(prev=>prev.filter(item=>item!==e.target.value))
-    }
-    
-    else{
-      setCategory(prev=>[...prev,e.target.value])
-    }
-  }
 
-  const togglesubCategory = (e)=>{
-    if(subCategory.includes(e.target.value)){
-      setSubCategory(prev=>prev.filter(item=>item!==e.target.value))
+  const toggleCategory = (e) => {
+    if (category.includes(e.target.value)) {
+      setCategory(prev => prev.filter(item => item !== e.target.value))
     }
-    
-    else{
-      setSubCategory(prev=>[...prev,e.target.value])
+
+    else {
+      setCategory(prev => [...prev, e.target.value])
     }
   }
 
-  const applyFilter = ()=>{
+  const togglesubCategory = (e) => {
+    if (subCategory.includes(e.target.value)) {
+      setSubCategory(prev => prev.filter(item => item !== e.target.value))
+    }
+
+    else {
+      setSubCategory(prev => [...prev, e.target.value])
+    }
+  }
+
+  const applyFilter = () => {
     let ProductsCopy = products.slice();
 
-    if(showSearch && search){
-      ProductsCopy = ProductsCopy.filter(item=>item.name.toLowerCase().includes(search.toLowerCase()))
+    if (showSearch && search) {
+      ProductsCopy = ProductsCopy.filter(item => item.name.toLowerCase().includes(search.toLowerCase()))
     }
 
-    if(category.length>0){
-      ProductsCopy = ProductsCopy.filter(item=>(category.includes(item.category)))
+    if (category.length > 0) {
+      ProductsCopy = ProductsCopy.filter(item => (category.includes(item.category)))
     }
 
     if (subCategory.length > 0) {
-    ProductsCopy = ProductsCopy.filter(item => {
-      if (Array.isArray(item.subCategory)) {
-        return item.subCategory.some(sub =>
+      ProductsCopy = ProductsCopy.filter(item =>
+        item.subCategory.some(sub =>
           subCategory.includes(sub)
-        );
-      }
-      return subCategory.includes(item.subCategory);
-    });
-  }
+        )
+      );
+    }
 
     setFilterProducts(ProductsCopy)
   }
@@ -96,16 +93,16 @@ const AllProducts = () => {
 
               <div className="flex flex-col gap-2 text-sm font-light text-gray-700">
                 <p className="flex gap-2">
-                  <input className="w-3" type="checkbox" value="Bouquet" onChange={toggleCategory}/>Bouquet</p>
+                  <input className="w-3" type="checkbox" value="Bouquet" onChange={toggleCategory} />Bouquet</p>
 
                 <p className="flex gap-2">
-                  <input className="w-3" type="checkbox" value="flower-pots" onChange={toggleCategory}/>FlowerPots</p>
+                  <input className="w-3" type="checkbox" value="flower-pots" onChange={toggleCategory} />FlowerPots</p>
 
                 <p className="flex gap-2">
-                  <input className="w-3" type="checkbox" value="keychain" onChange={toggleCategory}/>KeyChain</p>
+                  <input className="w-3" type="checkbox" value="keychain" onChange={toggleCategory} />KeyChain</p>
 
                 <p className="flex gap-2">
-                  <input className="w-3" type="checkbox" value="flower" onChange={toggleCategory}/>Flower</p>
+                  <input className="w-3" type="checkbox" value="flower" onChange={toggleCategory} />Flower</p>
               </div>
             </div>
 
@@ -115,25 +112,25 @@ const AllProducts = () => {
 
               <div className="flex flex-col gap-2 text-sm font-light text-gray-700">
                 <p className="flex gap-2">
-                  <input className="w-3" type="checkbox" value="Lily" onChange={togglesubCategory}/>Lily</p>
+                  <input className="w-3" type="checkbox" value="Lily" onChange={togglesubCategory} />Lily</p>
 
                 <p className="flex gap-2">
-                  <input className="w-3" type="checkbox" value="Sunflower" onChange={togglesubCategory}/>Sunflower</p>
+                  <input className="w-3" type="checkbox" value="Sunflower" onChange={togglesubCategory} />Sunflower</p>
 
                 <p className="flex gap-2">
-                  <input className="w-3" type="checkbox" value="Tulip" onChange={togglesubCategory}/>Tulip</p>
+                  <input className="w-3" type="checkbox" value="Tulip" onChange={togglesubCategory} />Tulip</p>
 
                 <p className="flex gap-2">
-                  <input className="w-3" type="checkbox" value="Gerbera" onChange={togglesubCategory}/>Gerbera</p>
+                  <input className="w-3" type="checkbox" value="Gerbera" onChange={togglesubCategory} />Gerbera</p>
 
                 <p className="flex gap-2">
-                  <input className="w-3" type="checkbox" value="Rose" onChange={togglesubCategory}/>Rose</p>
+                  <input className="w-3" type="checkbox" value="Rose" onChange={togglesubCategory} />Rose</p>
 
                 <p className="flex gap-2">
-                  <input className="w-3" type="checkbox" value="Daisy" onChange={togglesubCategory}/>Daisy</p>
+                  <input className="w-3" type="checkbox" value="Daisy" onChange={togglesubCategory} />Daisy</p>
 
                 <p className="flex gap-2">
-                  <input className="w-3" type="checkbox" value="Hydrangea" onChange={togglesubCategory}/>Hydrangea</p>
+                  <input className="w-3" type="checkbox" value="Hydrangea" onChange={togglesubCategory} />Hydrangea</p>
               </div>
             </div>
 
@@ -209,8 +206,8 @@ const AllProducts = () => {
         <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 gap-y-6 p-4'>
 
           {
-            filterProducts.map((item,index)=>(
-              <ProductItem key={index} id={item._id} image = {item.image} name={item.name} price={item.price}/>
+            filterProducts.map((item, index) => (
+              <ProductItem key={index} id={item._id} image={item.image} name={item.name} price={item.price} />
             ))
           }
 

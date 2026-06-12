@@ -5,7 +5,10 @@ import productModel from "../models/productModel.js";
 const addProduct = async (req, res) => {
     try {
 
-        const { name, description, price, category, subCategory, color, bestSeller, date } = req.body;
+        let { name, description, price, category, subCategory, color, bestSeller, date } = req.body;
+
+        let parsedSubCategory = JSON.parse(req.body.subCategory);
+            
 
         const image1 = req.files.image1 ? req.files.image1[0] : null;
         const image2 = req.files.image2 ? req.files.image2[0] : null;
@@ -21,6 +24,7 @@ const addProduct = async (req, res) => {
                 return result.secure_url
             })
         )
+        subCategory = parsedSubCategory;
 
         const productData = {
             name,
@@ -46,7 +50,7 @@ const addProduct = async (req, res) => {
 
         console.log(images);
 
-        
+
 
 
 
@@ -110,20 +114,20 @@ const singleProduct = async (req, res) => {
 
 }
 
-const categoryProducts = async (req,res) => {
+const categoryProducts = async (req, res) => {
     try {
-        
-        const {category} = req.params;
+
+        const { category } = req.params;
 
         const products = await productModel.find({
             category: category
         });
 
-        res.json({success:true,products});
+        res.json({ success: true, products });
     } catch (error) {
 
         res.json({ success: false, message: error.message });
-        
+
     }
 }
 

@@ -15,9 +15,21 @@ const Add = ({ token }) => {
   const [description, setDescription] = useState("")
   const [price, setPrice] = useState("")
   const [category, setCategory] = useState("Bouquet")
-  const [subCategory, setSubCategory] = useState("Lily")
+  const [subCategory, setSubCategory] = useState([])
   const [color, setColor] = useState("")
   const [bestSeller, setBestSeller] = useState(false)
+
+  const handleSubCategory = (e) => {
+    const value = e.target.value;
+
+    if (e.target.checked) {
+      setSubCategory(prev => [...prev, value]);
+    } else {
+      setSubCategory(prev =>
+        prev.filter(item => item !== value)
+      );
+    }
+  };
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
@@ -30,7 +42,10 @@ const Add = ({ token }) => {
       formData.append("description", description)
       formData.append("price", price)
       formData.append("category", category)
-      formData.append("subCategory", subCategory)
+      formData.append(
+        "subCategory",
+        JSON.stringify(subCategory)
+      )
       formData.append("color", color)
       formData.append("bestSeller", bestSeller)
 
@@ -39,9 +54,9 @@ const Add = ({ token }) => {
       image3 && formData.append("image3", image3)
       image4 && formData.append("image4", image4)
 
-      const response = await axios.post(backendURL + "/api/product/add", formData, {headers: {Authorization: `Bearer ${token}`}})
-      
-      if(response.data.success){
+      const response = await axios.post(backendURL + "/api/product/add", formData, { headers: { Authorization: `Bearer ${token}` } })
+
+      if (response.data.success) {
         toast.success(response.data.message)
         setName("")
         setDescription("")
@@ -52,7 +67,7 @@ const Add = ({ token }) => {
         setImage3(false)
         setImage4(false)
       }
-      else{
+      else {
         toast.error(response.data.message)
       }
 
@@ -131,17 +146,53 @@ const Add = ({ token }) => {
           </select>
         </div>
 
-        <div>
-          <p className='mb-2'>Sub Category</p>
-          <select onChange={(e) => setSubCategory(e.target.value)} className='w-full px-3 py-2'>
-            <option value="Lily">Lily</option>
-            <option value="Sunflower">Sunflower</option>
-            <option value="Tulip">Tulip</option>
-            <option value="Gerbera">Gerbera</option>
-            <option value="Rose">Rose</option>
-            <option value="Daisy">Daisy</option>
-            <option value="Hydrangea">Hydrangea</option>
-          </select>
+        <div className="flex flex-wrap flex-col gap-3">
+
+          <label className="flex items-center gap-1">
+            <input
+              type="checkbox"
+              value="Rose"
+              onChange={handleSubCategory}
+            />
+            Rose
+          </label>
+
+          <label className="flex items-center gap-1">
+            <input
+              type="checkbox"
+              value="Lily"
+              onChange={handleSubCategory}
+            />
+            Lily
+          </label>
+
+          <label className="flex items-center gap-1">
+            <input
+              type="checkbox"
+              value="Tulip"
+              onChange={handleSubCategory}
+            />
+            Tulip
+          </label>
+
+          <label className="flex items-center gap-1">
+            <input
+              type="checkbox"
+              value="Sunflower"
+              onChange={handleSubCategory}
+            />
+            Sunflower
+          </label>
+
+          <label className="flex items-center gap-1">
+            <input
+              type="checkbox"
+              value="Gerbera"
+              onChange={handleSubCategory}
+            />
+            Gerbera
+          </label>
+
         </div>
 
         <div>
