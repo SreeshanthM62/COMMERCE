@@ -47,18 +47,18 @@ const Product = () => {
   }, [categoryName]);
 
   return productData ? (
-    <div className="border-t-2 pt-10 transition-opacity duration-500 opacity-100">
+    <div className="border-t-2 pt-6 transition-opacity duration-500 opacity-100">
       {/* Product Data */}
-      <div className="flex flex-col lg:flex-row gap-13 mt-6 max-w-6xl px-4">
+      <div className="flex flex-col lg:flex-row gap-7 mt-6 max-w-6xl px-4">
 
         {/* LEFT: Images */}
         <div className="flex flex-col-reverse lg:flex-row lg:ml-10 gap-4 w-full lg:w-1/2">
 
           {/* Thumbnail Images */}
           <div className="flex lg:flex-col gap-3 overflow-x-auto lg:overflow-y-auto 
-                      max-h-[500px] lg:w-28">
+                      lg:w-28">
             {productData.image.map((item, index) => (
-              <div className='w-26 h-35 flex justify-center items-center '>
+              <div className='w-20 h-25 flex justify-center items-center '>
                 <img
                   key={index}
                   src={item}
