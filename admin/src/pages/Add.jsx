@@ -202,6 +202,15 @@ const Add = ({ token }) => {
             Hydrangea
           </label>
 
+          <label className="flex items-center gap-1">
+            <input
+              type="checkbox"
+              value="Other"
+              onChange={handleSubCategory}
+            />
+            Other
+          </label>
+
         </div>
 
         <div>
