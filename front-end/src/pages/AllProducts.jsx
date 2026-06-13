@@ -79,8 +79,8 @@ const AllProducts = () => {
 
       {/* Left Section */}
       <div>
-        <div className='min-w-60 p-5'>
-          <p onClick={() => setShowFilter(!showFilter)} className='my-2 text-xl flex items-center cursor-pointer gap-2'>
+        <div className='min-w-60 p-5 sticky top-20 self-start border border-gray-300 rounded-sm sm:block'>
+          <p onClick={() => setShowFilter(!showFilter)} className='my-2 text-xl flex items-center cursor-pointer font-bold gap-2'>
             FILTERS
             <img className={`w-[12px] h-3 sm:hidden ${showFilter ? "rotate-270" : ""}`} src={assets.dropdown_icon} />
           </p>
@@ -193,7 +193,11 @@ const AllProducts = () => {
       {/* Right Section */}
       <div className="flex-1">
         <div className="flex justify-between text-base items-center sm:text-2xl mb-4">
-          <h1 className='m-4 font-[Neuton] font-bold text-2xl sm:text-3xl'>ALL PRODUCTS</h1>
+          <div className='flex flex-col justify-center items-center'>
+                <h1 className='font-[Jost] font-bold italic text-[20px] sm:text-[30px] p-5 flex flex-col items-center text-center'>ALL PRODUCTS
+                    <p className="w-[75%] h-[1.5px] bg-black"></p>
+                </h1>
+            </div>
 
           {/* Product Sort */}
           <select className="border-2 border-gray-300 mr-3 text-[13px] h-[33px] p-[5px]">
