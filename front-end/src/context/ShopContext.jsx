@@ -136,24 +136,36 @@ const ShopContextProvider = (props) => {
 
 
     const getProductsData = async () => {
-        try {
+    try {
+        const response = await axios.get(backendURL + "/api/product/list")
+        
+        if (response.data.success) {
+            
+            const optimizedProducts = response.data.products.map(product => {
+                if (product.image && Array.isArray(product.image)) {
+                    return {
+                        ...product,
+                        image: product.image.map(imgUrl => 
+                            // Automatically requests optimized format, auto-quality, and a maximum width of 400px
+                            imgUrl.replace("/upload/", "/upload/f_auto,q_auto,w_400,c_scale/")
+                        )
+                    }
+                }
+                return product;
+            });
 
-            const response = await axios.get(backendURL + "/api/product/list")
-            if (response.data.success) {
-                setProducts(response.data.products)
-            }
-            else {
-                toast.error(response.data.products)
-            }
-
-
-
-        } catch (error) {
-            console.log(error)
-            toast.error(error.message)
-
+            
+            setProducts(optimizedProducts)
         }
+        else {
+            toast.error(response.data.message || "Failed to fetch products")
+        }
+
+    } catch (error) {
+        console.log(error)
+        toast.error(error.message)
     }
+}
 
     const getUserCart = async (token) => {
         try {
