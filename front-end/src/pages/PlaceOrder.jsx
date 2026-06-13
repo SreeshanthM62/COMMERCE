@@ -343,7 +343,7 @@ const PlaceOrder = () => {
             {/* Razorpay option */}
             <div className='flex gap-3 flex-col lg:flex-row'>
 
-              <div onClick={() => setMethod("COD")} className="flex items-center gap-3 border px-4 py-3 w-[145px] cursor-pointer mb-6">
+              {/* <div onClick={() => setMethod("COD")} className="flex items-center gap-3 border px-4 py-3 w-[145px] cursor-pointer mb-6">
                 <span className="min-w-4 h-4 border rounded-full flex items-center justify-center">
                   <span className={`min-w-2.5 h-2.5 ${method === "COD" ? "bg-green-500" : ""} rounded-full`}></span>
                 </span>
@@ -354,7 +354,7 @@ const PlaceOrder = () => {
                   alt="Razorpay"
                   className="h-5 w-[125px] object-cover"
                 />
-              </div>
+              </div> */}
 
               <div onClick={() => setMethod("cashfreepayment")} className="flex items-center gap-3 border px-4 py-3 w-[145px] cursor-pointer mb-6">
                 <span className="min-w-4 h-4 border rounded-full flex items-center justify-center">
@@ -385,9 +385,9 @@ const PlaceOrder = () => {
 
             {/* Place order */}
 
-            <button type="submit" className="bg-black text-white cursor-pointer px-10 py-3 text-sm">
+            {/* <button type="submit" className="bg-black text-white cursor-pointer px-10 py-3 text-sm">
               PLACE ORDER
-            </button>
+            </button> */}
 
           </div>
 
