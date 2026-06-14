@@ -162,10 +162,10 @@ const Product = () => {
 
       </div>
 
-      <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 gap-y-6 p-4'>
+      <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 gap-y-6'>
 
         {
-          relatedProducts.slice(0, 5).map((item, index) => (
+          relatedProducts.slice(0, 5).reverse().map((item, index) => (
             <div key={item._id}
               className={index === 4 ? 'w-[150px] flex-shrink-0 hidden sm:block' : ''}>
               <ProductItem key={index} id={item._id} image={item.image} name={item.name} price={item.price} />
