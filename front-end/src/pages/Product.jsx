@@ -12,6 +12,7 @@ const Product = () => {
   const [productData, setProductData] = useState(false)
   const [image, setImage] = useState("")
   const [categoryProducts, setCategoryProducts] = useState([]);
+  const [relatedProducts, setRelatedProducts] = useState([])
 
   const fetchProductData = async () => {
 
@@ -32,6 +33,33 @@ const Product = () => {
   }, [productId, products])
 
   const categoryName = productData.category
+
+  const getRelatedProducts = async () => {
+    try {
+
+      const response = await axios.get(backendURL + `/api/product/related-products/${productId}`)
+
+
+      if (response.data.success) {
+
+        setRelatedProducts(response.data.relatedProducts)
+        console.log("RELATED PRODUCTS: ", response.data.relatedProducts)
+
+      }
+
+    } catch (error) {
+      console.log(error.message)
+
+    }
+  }
+
+  useEffect(() => {
+    console.log("productId:", productId);
+
+    if (productId) {
+      getRelatedProducts();
+    }
+  }, [productId]);
 
   useEffect(() => {
 
@@ -134,15 +162,18 @@ const Product = () => {
 
       </div>
 
-      <div className='grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 gap-y-6 p-4'>
+      <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 gap-y-6 p-4'>
 
-                {
-                    categoryProducts.slice(0,5).map((item, index) => (
-                        <ProductItem key={index} id={item._id} image={item.image} name={item.name} price={item.price} />
-                    ))
-                }
-
+        {
+          relatedProducts.slice(0, 5).map((item, index) => (
+            <div key={item._id}
+              className={index === 4 ? 'w-[150px] flex-shrink-0 hidden sm:block' : ''}>
+              <ProductItem key={index} id={item._id} image={item.image} name={item.name} price={item.price} />
             </div>
+          ))
+        }
+
+      </div>
 
 
     </div>

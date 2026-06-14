@@ -9,7 +9,8 @@ const productSchema = new mongoose.Schema({
     subCategory:{type: [String], required:true},
     color:{type: String, required:true},
     bestSeller:{type: Boolean},
-    date:{type:Number,required:true}
+    date:{type:Number,required:true},
+    relatedProducts : {type:[String], default:null}
 })
 
 const productModel = mongoose.models.product || mongoose.model("product",productSchema)

@@ -1,4 +1,5 @@
 import { v2 as cloudinary } from "cloudinary"
+import mongoose from "mongoose";
 import productModel from "../models/productModel.js";
 
 // function for add product
@@ -131,4 +132,38 @@ const categoryProducts = async (req, res) => {
     }
 }
 
-export { addProduct, listProducts, removeProduct, singleProduct, categoryProducts }
+const relatedProducts = async (req, res) => {
+  try {
+
+    const { product_id } = req.params;
+
+    const product = await productModel.findById(product_id);
+
+    if (!product) {
+      return res.json({
+        success: false,
+        message: "Product not found"
+      });
+    }
+
+    console.log(product.toObject());
+    
+
+    const related = await productModel.find({
+      _id: { $in: product.relatedProducts }
+    });
+
+    res.json({
+      success: true,
+      relatedProducts: related
+    });
+
+  } catch (error) {
+    res.json({
+      success: false,
+      message: error.message
+    });
+  }
+};
+
+export { addProduct, listProducts, removeProduct, singleProduct, categoryProducts, relatedProducts }
