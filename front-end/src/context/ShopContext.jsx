@@ -3,6 +3,7 @@ import { createContext, useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+ 
 
 
 export const ShopContext = createContext();
@@ -17,6 +18,8 @@ const ShopContextProvider = (props) => {
     const [cartItems, setCartItems] = useState({})
     const [token, setToken] = useState("")
     const [products, setProducts] = useState([])
+    const [isLoading, setIsLoading] = useState(true)
+    
 
     const navigate = useNavigate()
 
@@ -140,7 +143,8 @@ const ShopContextProvider = (props) => {
         const response = await axios.get(backendURL + "/api/product/list")
         
         if (response.data.success) {
-            
+
+            setIsLoading(true);
             const optimizedProducts = response.data.products.map(product => {
                 if (product.image && Array.isArray(product.image)) {
                     return {
@@ -164,6 +168,8 @@ const ShopContextProvider = (props) => {
     } catch (error) {
         console.log(error)
         toast.error(error.message)
+    } finally{
+        setIsLoading(false)
     }
 }
 
@@ -242,7 +248,8 @@ const ShopContextProvider = (props) => {
         getCartAmount,
         navigate,
         backendURL,
-        token, setToken
+        token, setToken,
+        isLoading
     }
 
 
