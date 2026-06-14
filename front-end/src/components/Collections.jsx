@@ -1,12 +1,12 @@
 import React, { useState, useContext, useEffect } from 'react'
 import { ShopContext } from '../context/ShopContext'
 import ProductItem from './ProductItem'
-import FlowerLoader from './Loading'
+
 
 
 const Collections = () => {
 
-  const { products,navigate, isLoading } = useContext(ShopContext)
+  const { products,navigate} = useContext(ShopContext)
   const [BestSeller, setBestSeller] = useState([])
  
 
