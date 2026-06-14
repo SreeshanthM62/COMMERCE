@@ -18,7 +18,7 @@ const ShopContextProvider = (props) => {
     const [cartItems, setCartItems] = useState({})
     const [token, setToken] = useState("")
     const [products, setProducts] = useState([])
-    const [isLoading, setIsLoading] = useState(true)
+    
     
 
     const navigate = useNavigate()
@@ -144,7 +144,7 @@ const ShopContextProvider = (props) => {
         
         if (response.data.success) {
 
-            setIsLoading(true);
+            
             const optimizedProducts = response.data.products.map(product => {
                 if (product.image && Array.isArray(product.image)) {
                     return {
@@ -168,9 +168,7 @@ const ShopContextProvider = (props) => {
     } catch (error) {
         console.log(error)
         toast.error(error.message)
-    } finally{
-        setIsLoading(false)
-    }
+    } 
 }
 
     const getUserCart = async (token) => {
