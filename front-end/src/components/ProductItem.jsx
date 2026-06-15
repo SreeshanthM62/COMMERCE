@@ -17,11 +17,14 @@ const ProductItem = ({ id, image, name, price }) => {
             />
           </div>
         </div>
-        <h1 className='pt-3 pb-1 text-sm font-bold font-[Eczar] sm:text-[16px]'>{name}</h1>
-        <p className='pb-1.5 text-sm font-semibold sm:text-[15px]'>{currency}{price}</p>
+        <h1 className='pt-3 pb-1 text-[14.5px] font-bold font-[Libre Franklin] sm:text-[17px]'>{name}</h1>
+
       </Link>
 
-      <button onClick={() => addToCart(id)} className="py-1.25 font-[Alegreya] font-semibold bg-[#FF69B4] text-white border-0 cursor-pointer sm:text-[18px] rounded-xl">Add To Cart ❀</button>
+      <div className='flex flex-col'>
+        <p className='pb-1.5 text-[18px] font-semibold font-[BioRhyme] sm:text-[18px]'>{currency}{price}</p>
+        <button onClick={() => addToCart(id)} className="py-1.25 font-[Alegreya] font-semibold bg-[#FF69B4] text-white border-0 cursor-pointer sm:text-[18px] rounded-xl">Add To Cart ❀</button>
+      </div>
 
     </div>
 

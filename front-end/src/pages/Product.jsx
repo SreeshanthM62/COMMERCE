@@ -113,12 +113,15 @@ const Product = () => {
 
         {/* RIGHT: Product Info */}
         <div className="w-full lg:w-1/2 space-y-4">
-          <h1 className="text-3xl font-[Eczar] font-semibold">{productData.name}</h1>
+          <div className='flex flex-col gap-1.25'>
+            <h1 className="text-3xl font-[Eczar] font-semibold">{productData.name}</h1>
 
 
-          <p className="text-[30px] font-[BioRhyme] font-bold text-pink-500">
-            {currency}{productData.price}
-          </p>
+            <p className="text-[30px] font-[BioRhyme] font-bold text-pink-500">
+              {currency}{productData.price}
+            </p>
+
+          </div>
 
           <p className="text-[14px] sm:text-[16px] font-[Eczar] ">{productData.description}</p>
 
@@ -155,24 +158,25 @@ const Product = () => {
 
       </div>
 
-      <div className='flex flex-col justify-center items-center mt-7'>
-        <h1 className='font-[Arizonia] font-extrabold text-[23px] sm:text-[35px] flex flex-col items-center text-center'>RELATED PRODUCTS
-          <p className="w-[75%] h-[1.5px] bg-black"></p>
-        </h1>
+      <div className='p-5 flex flex-col items-center gap-5'>
+        <div className='flex flex-col justify-center items-center'>
+          <h1 className='font-[Arizonia] font-extrabold text-[23px] sm:text-[35px] flex flex-col items-center text-center'>PRODUCTS
+            <p className="w-[75%] h-[1.5px] bg-black"></p>
+          </h1>
 
-      </div>
+        </div>
 
-      <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 gap-y-6'>
+        <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 gap-y-6'>
 
-        {
-          relatedProducts.slice(0, 5).reverse().map((item, index) => (
-            <div key={item._id}
-              className={index === 4 ? 'w-[150px] flex-shrink-0 hidden sm:block' : ''}>
+          {
+            relatedProducts.slice(0, 5).reverse().map((item, index) => (
               <ProductItem key={index} id={item._id} image={item.image} name={item.name} price={item.price} />
-            </div>
-          ))
-        }
 
+            ))
+          }
+
+
+        </div>
       </div>
 
 
