@@ -21,7 +21,6 @@ import SearchBar from './components/SearchBar'
 import ScrollToTop from './context/ScrollToTop'
 import { ToastContainer, toast } from 'react-toastify';
 import Profile from './pages/Profile'
-import Alert from './components/Alert'
 
 
 const App = () => {
@@ -31,7 +30,6 @@ const App = () => {
         position="top-right"
         autoClose={2000}
         theme="colored" />
-      <Alert />
       <ScrollToTop />
       <Navbar />
       <SearchBar />
