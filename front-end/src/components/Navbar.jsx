@@ -60,7 +60,7 @@ const Navbar = () => {
                         </div>
                         
                         <li>
-                        <Link to="/cart" className='relative'>
+                        <Link to="/wishlist" className='relative'>
                             <li>
                                 <img className="w-[18px] sm:w-[20px] shrink-0 cursor-pointer" src={assets.wishlist_icon} />
                             </li>
