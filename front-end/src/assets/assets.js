@@ -23,13 +23,15 @@ import razorpay_logo from "./razorpay-icon.png"
 import stripe_logo from "./stripe.png"
 import cod_logo from "./cod.png"
 import cashfree_logo from "./cashfree.png"
+import wishlist_icon from "./e-commerce.png"
+import wishlisted_icon from "./love.png"
 // import lily from "lily.png"
 // import daisy from "daisy.psd"
 // import hydrangea from "hydrangea.jpg"
 // import sunflower from "sunflower.jpg"
 // import rose from "rose.jpg"
 // import tulip from "tulip.jpg"
-// import gerbera from "gerbera.jpg"
+// import gerbera from "gerbera.jpg" 
 
 import sbb00 from "./sbb00.jpg";
 import sbb01 from "./sbb01.jpg"
@@ -109,6 +111,8 @@ export const assets = {
     stripe_logo,
     cod_logo,
     cashfree_logo,
+    wishlist_icon,
+    wishlisted_icon
     // lily,
     // sunflower,
     // gerbera,

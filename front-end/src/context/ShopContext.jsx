@@ -18,6 +18,7 @@ const ShopContextProvider = (props) => {
     const [cartItems, setCartItems] = useState({})
     const [token, setToken] = useState("")
     const [products, setProducts] = useState([])
+    const [wishlist, setWishlist] = useState([])
     
     
 
@@ -215,6 +216,45 @@ const ShopContextProvider = (props) => {
         }
     };
 
+    const toggleWishlist = async(token, productId) =>{
+        try {
+
+            const response = await axios.post(
+                backendURL + "/api/wishlist/toggle-wishlist",
+                {productId},
+                { headers: { Authorization: `Bearer ${token}` } }
+            );
+            
+            if(response.data.success){
+                setWishlist(response.data.wishlist)
+                console.log(wishlist)
+            }
+        } catch (error) {
+            console.log(error)
+            
+        }
+    }
+
+    const getWishlist = async(token) =>{
+        try {
+
+            const response = await axios.get(
+                backendURL + "/api/wishlist/get-wishlist",
+                { headers: { Authorization: `Bearer ${token}` } }
+            );
+
+            if(response.data.success){
+                setWishlist(response.data.wishlist)
+                console.log(wishlist)
+            }
+
+            
+        } catch (error) {
+            console.log(error)
+            
+        }
+    }
+
 
 
 
@@ -235,6 +275,7 @@ const ShopContextProvider = (props) => {
     useEffect(() => {
         if (token) {
             getUserCart(token);
+            getWishlist(token)
         }
     }, [token]);
 
@@ -249,6 +290,8 @@ const ShopContextProvider = (props) => {
         navigate,
         backendURL,
         token, setToken,
+        wishlist, setWishlist,
+        toggleWishlist, getWishlist
     }
 
 

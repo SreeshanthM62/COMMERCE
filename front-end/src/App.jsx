@@ -21,6 +21,7 @@ import SearchBar from './components/SearchBar'
 import ScrollToTop from './context/ScrollToTop'
 import { ToastContainer, toast } from 'react-toastify';
 import Profile from './pages/Profile'
+import Wishlist from './pages/Wishlist'
 
 
 const App = () => {
@@ -52,6 +53,7 @@ const App = () => {
         <Route path="/payment-success" element={<PaymentSuccess />} />
         <Route path="/payment-failed" element={<PaymentFailed />} />
         <Route path="/category/:categoryName" element={<CategoryPage />} />
+        <Route path="/wishlist" element={<Wishlist/>}/>
 
       </Routes>
       

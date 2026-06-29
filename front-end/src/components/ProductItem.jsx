@@ -1,10 +1,16 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { ShopContext } from '../context/ShopContext'
 import { Link } from "react-router-dom"
+import { assets } from '../assets/assets'
+
+
 
 const ProductItem = ({ id, image, name, price }) => {
 
-  const { currency, addToCart } = useContext(ShopContext)
+  const { currency, addToCart, token, wishlist, toggleWishlist, getWishlist } = useContext(ShopContext)
+  const [liked, setLiked] = useState(false)
+
+
   return (
     <div className='flex flex-col justify-between'>
       <Link className="cursor-pointer" to={`/product/${id}`}>
@@ -23,7 +29,18 @@ const ProductItem = ({ id, image, name, price }) => {
 
       <div className='flex flex-col'>
         <p className='pb-1.5 text-[18px] font-semibold font-[BioRhyme] sm:text-[18px]'>{currency}{price}</p>
-        <button onClick={() => addToCart(id)} className="py-1.25 font-[Alegreya] font-semibold bg-[#FF69B4] text-white border-0 cursor-pointer sm:text-[18px] rounded-xl">Add To Cart ❀</button>
+        <div className='flex justify-between gap-2'>
+          <button onClick={() => addToCart(id)} className="w-full py-1 font-[Alegreya] font-semibold bg-[#FF69B4] text-white border-0 cursor-pointer sm:text-[18px] rounded-xl">Add To Cart ❀</button>
+          <button className='w-8 h-8 cursor-pointer'
+          onClick={()=>toggleWishlist(token, id)}>
+            
+            <img
+            
+            className='w-6 h-7 cursor-pointer'
+            src={wishlist.includes(id) ? assets.wishlisted_icon: assets.wishlist_icon}
+          />
+          </button>
+        </div>
       </div>
 
     </div>

@@ -10,6 +10,7 @@ import productRouter from "./routes/productRouter.js";
 import cartRouter from "./routes/cartRoute.js";
 import orderRouter from "./routes/orderRoute.js";
 import { autoCancelOrders, webhookCashFreePayment } from "./controllers/orderController.js";
+import wishlistRouter from "./routes/wishlistRoute.js";
 
 // App Config
 const app = express();
@@ -38,6 +39,7 @@ app.use("/api/user",userRouter)
 app.use("/api/product",productRouter)
 app.use("/api/cart",cartRouter)
 app.use("/api/order",orderRouter)
+app.use("/api/wishlist", wishlistRouter) 
 // app.get("/payment-success", (req, res) => {
 //   const orderId = req.query.order_id;
 
