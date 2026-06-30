@@ -3,7 +3,7 @@ import { createContext, useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
- 
+
 
 
 export const ShopContext = createContext();
@@ -19,8 +19,8 @@ const ShopContextProvider = (props) => {
     const [token, setToken] = useState("")
     const [products, setProducts] = useState([])
     const [wishlist, setWishlist] = useState([])
-    
-    
+
+
 
     const navigate = useNavigate()
 
@@ -39,7 +39,7 @@ const ShopContextProvider = (props) => {
         }
 
         setCartItems(cartData);
-        
+
 
         if (token) {
             try {
@@ -128,10 +128,10 @@ const ShopContextProvider = (props) => {
 
 
     useEffect(() => {
-  if (!token) {
-    localStorage.setItem("cartItems", JSON.stringify(cartItems))
-  }
-}, [cartItems, token])
+        if (!token) {
+            localStorage.setItem("cartItems", JSON.stringify(cartItems))
+        }
+    }, [cartItems, token])
 
 
 
@@ -140,39 +140,39 @@ const ShopContextProvider = (props) => {
 
 
     const getProductsData = async () => {
-    try {
-        const response = await axios.get(backendURL + "/api/product/list")
-        
-        if (response.data.success) {
+        try {
+            const response = await axios.get(backendURL + "/api/product/list")
 
-            
-            const optimizedProducts = response.data.products.map(product => {
-                if (product.image && Array.isArray(product.image)) {
-                    return {
-                        ...product,
-                        image: product.image.map(imgUrl => 
-                            // Automatically requests optimized format, auto-quality, and a maximum width of 400px
-                            imgUrl.replace("/upload/", "/upload/f_auto,q_auto,w_400,c_scale/")
-                        )
+            if (response.data.success) {
+
+
+                const optimizedProducts = response.data.products.map(product => {
+                    if (product.image && Array.isArray(product.image)) {
+                        return {
+                            ...product,
+                            image: product.image.map(imgUrl =>
+                                // Automatically requests optimized format, auto-quality, and a maximum width of 400px
+                                imgUrl.replace("/upload/", "/upload/f_auto,q_auto,w_400,c_scale/")
+                            )
+                        }
                     }
-                }
-                return product;
-            });
+                    return product;
+                });
 
-            
-            setProducts(optimizedProducts)
+
+                setProducts(optimizedProducts)
+            }
+            else {
+                toast.error(response.data.message || "Failed to fetch products")
+            }
+
+        } catch (error) {
+            console.log(error)
+            toast.error(error.message)
         }
-        else {
-            toast.error(response.data.message || "Failed to fetch products")
-        }
+    }
 
-    } catch (error) {
-        console.log(error)
-        toast.error(error.message)
-    } 
-}
 
-    
 
     const getUserCart = async (token) => {
         try {
@@ -216,26 +216,36 @@ const ShopContextProvider = (props) => {
         }
     };
 
-    const toggleWishlist = async(token, productId) =>{
+    const toggleWishlist = async (token, productId) => {
+
+        const previousWishlist = wishlist;
+
+        // Update UI immediately
+        if (wishlist.includes(productId)) {
+            setWishlist(wishlist.filter(id => id !== productId));
+        } else {
+            setWishlist([...wishlist, productId]);
+        }
+
         try {
 
             const response = await axios.post(
                 backendURL + "/api/wishlist/toggle-wishlist",
-                {productId},
+                { productId },
                 { headers: { Authorization: `Bearer ${token}` } }
             );
-            
-            if(response.data.success){
+
+            if (response.data.success) {
                 setWishlist(response.data.wishlist)
                 console.log(wishlist)
             }
         } catch (error) {
             console.log(error)
-            
+
         }
     }
 
-    const getWishlist = async(token) =>{
+    const getWishlist = async (token) => {
         try {
 
             const response = await axios.get(
@@ -243,15 +253,15 @@ const ShopContextProvider = (props) => {
                 { headers: { Authorization: `Bearer ${token}` } }
             );
 
-            if(response.data.success){
+            if (response.data.success) {
                 setWishlist(response.data.wishlist)
                 console.log(wishlist)
             }
 
-            
+
         } catch (error) {
             console.log(error)
-            
+
         }
     }
 
