@@ -131,7 +131,7 @@ const ShopContextProvider = (props) => {
         if (!token) {
             localStorage.setItem("cartItems", JSON.stringify(cartItems))
         }
-    }, [cartItems, token])
+    }, [cartItems, token])          ////////Check This   Remove (!token) 
 
 
 

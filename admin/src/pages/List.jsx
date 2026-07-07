@@ -2,6 +2,7 @@ import axios from 'axios'
 import React, {useEffect, useState} from 'react'
 import { backendURL, currency } from '../App'
 import { toast } from 'react-toastify'
+import { Pencil, Trash2 } from "lucide-react";
 
 
 const List = ({token}) => {
@@ -50,37 +51,58 @@ const List = ({token}) => {
   return (
     <>
 
-    <p className='mb-2'>All Products List</p>
-    <div className="flex flex-col gap-2 w-[80vw]">
-      {/* Table Title */}
+    <p className="mb-4 text-lg font-semibold">All Products</p>
 
-      <div className='hidden md:grid grid-cols-[1fr_3fr_1fr_1fr_1fr] items-center py-1 px-2 border  bg-pink-400 text-white w-full text-sm'>
-        <b>Image</b>
-        <b>Name</b>
-        <b>Category</b>
-        <b>Price</b>
-        <b className='text-center'>Action</b>
+<div className="flex flex-col gap-4 w-full max-w-5xl">
 
+  {list.map((item) => (
+    <div
+      key={item._id}
+      className="flex items-center justify-between border rounded-xl p-4 shadow-sm bg-white"
+    >
+      {/* Left Side */}
+      <div className="flex items-center gap-5">
+        <img
+          src={item.image[0]}
+          alt={item.name}
+          className="w-24 h-24 object-cover rounded-lg border"
+        />
+
+        <div className="space-y-1">
+          <h2 className="text-lg font-semibold">{item.name}</h2>
+
+          <p className="text-gray-500">
+            Category :
+            <span className="font-medium text-gray-700">
+              {" "}
+              {item.category}
+            </span>
+          </p>
+
+          <p className="text-pink-600 font-semibold">
+            {currency}
+            {item.price}
+          </p>
+        </div>
       </div>
 
-      {/* Product List */}
-      <div>
-        {
-        list.map((item,index)=>(
-          <div className="grid grid-cols-[1fr_3fr_1fr] md:grid-cols-[1fr_3fr_1fr_1fr_1fr] items-center py-1 px-2 border border-gray-400  w-full text-sm" key={index}>
-            <img className='w-18 h-25' src={item.image[0]} alt="" />
-            <p>{item.name}</p>
-            <p>{item.category}</p>
-            <p>{currency}{item.price}</p>
-            <p onClick={()=>removeProduct(item._id)} className='text-right md:text-center cursor-pointer text-lg'>X</p>
-          </div>
+      {/* Right Side */}
+      <div className="flex items-center gap-4">
+        <button className="p-2 rounded-lg hover:bg-blue-100 transition">
+          <Pencil size={20} className="text-blue-600" />
+        </button>
 
-        ))
-      }
-
+        <button
+          onClick={() => removeProduct(item._id)}
+          className="p-2 rounded-lg hover:bg-red-100 transition"
+        >
+          <Trash2 size={20} className="text-red-600" />
+        </button>
       </div>
     </div>
-      
+  ))}
+
+</div>
     </>
   )
 }
