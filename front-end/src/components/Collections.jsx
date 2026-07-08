@@ -1,15 +1,16 @@
 import React, { useState, useContext, useEffect } from 'react'
 import { ShopContext } from '../context/ShopContext'
 import ProductItem from './ProductItem'
+import Loader from './Loader'
 
 
 
 const Collections = () => {
 
-  const { products,navigate} = useContext(ShopContext)
+  const { products, navigate, loading } = useContext(ShopContext)
   const [BestSeller, setBestSeller] = useState([])
 
- 
+
 
 
   useEffect(() => {
@@ -26,20 +27,25 @@ const Collections = () => {
 
       </div>
 
-      <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 gap-y-6'>
+      {loading ? (<Loader/>): (
+        <div className = 'grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 gap-y-6'>
         
           {BestSeller.map((item, index) => (
-            <ProductItem key={index} id={item._id} image={item.image} name={item.name} price={item.price} />
+      <ProductItem key={index} id={item._id} image={item.image} name={item.name} price={item.price} />
           ))}
-        
 
-      </div>
 
-      <button onClick={()=>navigate("/all-products")} className="px-6 py-2 text-sm font-medium text-[#FF69B4] border border-[#FF69B4] 
-rounded-full hover:bg-[#FF69B4] hover:text-white active:bg-[#FF69B4] active:text-white transition duration-300 cursor-pointer">
-        View All →
-      </button>
     </div>
+  )
+
+
+}
+
+<button onClick={() => navigate("/all-products")} className="px-6 py-2 text-sm font-medium text-[#FF69B4] border border-[#FF69B4] 
+rounded-full hover:bg-[#FF69B4] hover:text-white active:bg-[#FF69B4] active:text-white transition duration-300 cursor-pointer">
+  View All →
+</button>
+    </div >
   )
 }
 

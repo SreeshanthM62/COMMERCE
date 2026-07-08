@@ -19,6 +19,7 @@ const ShopContextProvider = (props) => {
     const [token, setToken] = useState("")
     const [products, setProducts] = useState([])
     const [wishlist, setWishlist] = useState([])
+    const [loading, setLoading] = useState(false)
 
 
 
@@ -140,7 +141,11 @@ const ShopContextProvider = (props) => {
 
 
     const getProductsData = async () => {
+
         try {
+
+            setLoading(true)
+
             const response = await axios.get(backendURL + "/api/product/list")
 
             if (response.data.success) {
@@ -170,6 +175,7 @@ const ShopContextProvider = (props) => {
             console.log(error)
             toast.error(error.message)
         }
+        setLoading(false)
     }
 
 
@@ -301,7 +307,8 @@ const ShopContextProvider = (props) => {
         backendURL,
         token, setToken,
         wishlist, setWishlist,
-        toggleWishlist, getWishlist
+        toggleWishlist, getWishlist,
+        loading, setLoading
     }
 
 
