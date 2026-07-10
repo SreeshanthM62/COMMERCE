@@ -20,7 +20,9 @@ const RecommendProducts = ({ currentProductId }) => {
         if (currentProductId) fetchRecs();
     }, [currentProductId]);
 
-    if (items.length === 0) return [];
+    if (!Array.isArray(items) || items.length === 0) {
+    return null;
+}
 
     return (
         <div className="recommendations-section">
