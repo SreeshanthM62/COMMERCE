@@ -51,9 +51,19 @@ const AllProducts = () => {
   const applyFilter = () => {
     let ProductsCopy = products.slice();
 
-    if (showSearch && search) {
-      ProductsCopy = ProductsCopy.filter(item => item.name.toLowerCase().includes(search.toLowerCase()))
-    }
+    if (showSearch && search.trim()) {
+    const keywords = search
+      .toLowerCase()
+      .trim()
+      .split(/\s+/);
+
+    ProductsCopy = ProductsCopy.filter(item => {
+      const searchableText = `${item.name} ${item.description}`
+        .toLowerCase();
+
+      return keywords.every(word => searchableText.includes(word));
+    });
+  }
 
     if (category.length > 0) {
       ProductsCopy = ProductsCopy.filter(item => (category.includes(item.category)))
