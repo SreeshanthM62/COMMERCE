@@ -4,6 +4,7 @@ import { ShopContext } from '../context/ShopContext'
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import axios from "axios";
 import PaymentFailed from './paymentFailed'
+import useTrackEvent from '../hooks/useTrackEvent';
 
 const PaymentSuccess = () => {
 
@@ -14,12 +15,15 @@ const PaymentSuccess = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
 
-    // Inside your PaymentSuccess component
-const token = localStorage.getItem('token'); // or whatever key you use
+ 
+const token = localStorage.getItem('token'); 
+
+const track = useTrackEvent();
+
 
 if (!token) {
     console.error("No token found in storage!");
-    // Redirect to login or show error
+
 }
 
     const orderId = searchParams.get('order_id');
@@ -49,8 +53,14 @@ if (!token) {
 
 
             if (data.success) {
+                data.order.items.forEach(async(item)=>{
+                    await track(item._id, "purchase", token, backendURL)
+                })
+                
                 navigate("/orders");
                 setCartItems({});
+                
+                
 
                 
             } else {

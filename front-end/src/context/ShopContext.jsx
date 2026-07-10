@@ -3,6 +3,7 @@ import { createContext, useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import useTrackEvent from "../hooks/useTrackEvent";
 
 
 
@@ -20,6 +21,8 @@ const ShopContextProvider = (props) => {
     const [products, setProducts] = useState([])
     const [wishlist, setWishlist] = useState([])
     const [loading, setLoading] = useState(false)
+
+    const track = useTrackEvent()
 
 
 
@@ -46,6 +49,9 @@ const ShopContextProvider = (props) => {
             try {
 
                 await axios.post(backendURL + "/api/cart/add", { itemId }, { headers: { Authorization: `Bearer ${token}` } })
+
+                await track(itemId, "cart", token, backendURL);
+
 
 
             } catch (error) {
@@ -224,16 +230,21 @@ const ShopContextProvider = (props) => {
 
     const toggleWishlist = async (token, productId) => {
 
-        const previousWishlist = wishlist;
+        const previousWishlist = [...wishlist];
 
         // Update UI immediately
-        if (wishlist.includes(productId)) {
-            setWishlist(wishlist.filter(id => id !== productId));
-        } else {
+        const isAdding = !wishlist.includes(productId);
+
+        // Optimistic UI update
+        if (isAdding) {
             setWishlist([...wishlist, productId]);
+        } else {
+            setWishlist(wishlist.filter(id => id !== productId));
         }
 
         try {
+            console.log("Token:", token);
+console.log("ProductId:", productId);
 
             const response = await axios.post(
                 backendURL + "/api/wishlist/toggle-wishlist",
@@ -243,9 +254,12 @@ const ShopContextProvider = (props) => {
 
             if (response.data.success) {
                 setWishlist(response.data.wishlist)
-                console.log(wishlist)
+                if(isAdding){
+                    await track(productId, "wishlist", token, backendURL)
+                }
             }
         } catch (error) {
+            setWishlist(previousWishlist);
             console.log(error)
 
         }

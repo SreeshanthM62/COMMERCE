@@ -1,4 +1,5 @@
-import interactionModel from "../models/interactionModel";
+import interactionModel from "../models/interactionModel.js";
+import productModel from "../models/productModel.js";
 
 const EVENT_SCORES = {
     "click": 1,
@@ -39,46 +40,72 @@ const trackEvent = async (req, res) => {
     }
 }
 
-const getRecommendations = async(req, res) =>{
+const getRecommendations = async (req, res) => {
 
     try {
 
-        const {currentProductId} = req.params.productId;
+        const currentProductId = req.params.productId;
 
         const allInteractions = await interactionModel.find();
 
         const matrix = {}
 
         allInteractions.forEach(inter => {
-            if(!matrix[inter.productId]) matrix[inter.productId] = {};
+            if (!matrix[inter.productId]) matrix[inter.productId] = {};
             matrix[inter.productId][inter.userId] = inter.score
         })
 
         const targetVector = matrix[currentProductId];
 
-        if(!targetVector){
+        if (!targetVector) {
             return res.json([])
         }
 
         const similarities = []
 
         Object.keys(matrix).forEach(prodId => {
-            if(prodId == currentProductId ) return;
+            if (prodId == currentProductId) return;
 
             const compareVector = matrix[prodId];
 
             let dotProduct = 0;
+            let magA = 0;
+            let magB = 0;
+
+            const allUsers = new Set([...Object.keys(targetVector), ...Object.keys(compareVector)]);
+
+            allUsers.forEach(uId => {
+                const valA = targetVector[uId] || 0;
+                const valB = compareVector[uId] || 0;
+
+                dotProduct += valA * valB;
+                magA += valA * valA;
+                magB += valB * valB;
+            });
+
+            const similarity = dotProduct / (Math.sqrt(magA) * Math.sqrt(magB) || 1);
+
+            if (similarity > 0) {
+                similarities.push({ productId: prodId, similarity });
+            }
+
 
         })
 
+        similarities.sort((a, b) => b.similarity - a.similarity);
+        const topProductIds = similarities.slice(0, 4).map(s => s.productId);
 
 
-        
+        const recommendedProducts = await productModel.find({ _id: { $in: topProductIds } });
+
+        return res.json({success: true, recommendedProducts});
+
+
     } catch (error) {
-        
+        return res.json({ error: error.message });
     }
 
 }
 
 
-export {trackEvent}
+export { trackEvent, getRecommendations }

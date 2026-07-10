@@ -4,16 +4,31 @@ import { ShopContext } from '../context/ShopContext';
 import { assets } from '../assets/assets'
 import ProductItem from '../components/ProductItem';
 import axios from "axios"
+import useTrackEvent from '../hooks/useTrackEvent';
+import RecommendProducts from '../components/recommendProducts';
 
 const Product = () => {
 
   const { productId } = useParams();
-  const { products, currency, addToCart, backendURL } = useContext(ShopContext)
+  const { products, currency, addToCart, backendURL, token } = useContext(ShopContext)
   const [productData, setProductData] = useState(false)
   const [image, setImage] = useState("")
   const [categoryProducts, setCategoryProducts] = useState([]);
   const [relatedProducts, setRelatedProducts] = useState([])
 
+
+  const track = useTrackEvent();
+
+  useEffect(() => {
+    track(productId, "click", token, backendURL)
+
+    const timer = setTimeout(()=>{
+      track(productId, "view_10s", token, backendURL)
+    }, 10000)
+
+    return ()=> clearTimeout(timer);
+  }, [productId])
+  
   const fetchProductData = async () => {
 
     products.map((item) => {
@@ -174,9 +189,8 @@ const Product = () => {
 
             ))
           }
-
-
         </div>
+        <RecommendProducts currentProductId={productId}/>
       </div>
 
 
