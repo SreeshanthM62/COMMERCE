@@ -5,7 +5,7 @@ import { assets } from '../assets/assets'
 import ProductItem from '../components/ProductItem';
 import axios from "axios"
 import useTrackEvent from '../hooks/useTrackEvent';
-import RecommendProducts from '../components/recommendProducts';
+import RecommendProducts from '../components/RecommendProducts';
 
 const Product = () => {
 
