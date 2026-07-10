@@ -19,7 +19,6 @@ const ProductItem = ({ id, image, name, price }) => {
             <img
               className='aspect-4/5 transition-transform duration-300 ease-in-out hover:scale-110 active:scale-110'
               src={image}
-              loading="lazy"
             />
           </div>
         </div>

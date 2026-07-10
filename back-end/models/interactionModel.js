@@ -14,45 +14,12 @@ const interactionSchema = new mongoose.Schema(
         required:true
     },
 
-    interaction:{
-        click:{
-            type:Number,
-            default:0
-        },
-
-        view:{
-            type:Number,
-            default:0
-        },
-
-        wishlist:{
-            type:Number,
-            default:0
-        },
-
-        cart:{
-            type:Number,
-            default:0
-        },
-
-        purchase:{
-            type:Number,
-            default:0
-        }
-    },
-
     score:{
         type:Number,
         default:0
     },
+    lastUpdated: { type: Date, default: Date.now }
 
-    persona:{
-        type:String
-    }
-
-},
-{
-    timestamps:true
 })
 
 interactionSchema.index(

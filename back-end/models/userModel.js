@@ -9,10 +9,6 @@ const userSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "product"
     }],
-    persona: {
-    type: String,
-    required: true // or false, depending on your needs
-}
 
 },{minimize:false})
 

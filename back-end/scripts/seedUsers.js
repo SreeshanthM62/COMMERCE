@@ -10,19 +10,19 @@ import personas from "../config/personas.js";
 
 // await connectDB();
 
-
+const MONGODB_URI = "mongodb+srv://sreeshanth_m:mongodb6@website-cluster.cdgpeor.mongodb.net/commerce?appName=website-cluster"
 
 async function seedUsers(){
 
 
     try{
 
-        if (!process.env.MONGODB_URI) {
-            throw new Error("MONGO_URI is missing from your .env file or the path is incorrect.");
-        }
+        // if (!process.env.MONGODB_URI) {
+        //     throw new Error("MONGO_URI is missing from your .env file or the path is incorrect.");
+        // }
 
         // 3. Connect using your env variable
-        await mongoose.connect(process.env.MONGODB_URI);
+        await mongoose.connect(MONGODB_URI);
         console.log("🔗 Database connected successfully.");
 
         await userModel.deleteMany({
@@ -31,31 +31,7 @@ async function seedUsers(){
             }
         });
 
-        const hashedPassword = await bcrypt.hash("123456", 10);
-
-        for(let i=0;i<150;i++){
-
-            const randomPersona = personas[Math.floor(Math.random() * personas.length)];
-
-            const firstName=faker.person.firstName();
-            const lastName=faker.person.lastName();
-
-            await userModel.create({
-
-                name: `${firstName} ${lastName}`,
-                email: `${firstName.toLowerCase()}${i}@fake.com`,
-                password: hashedPassword, // Using pre-hashed password
-                persona: randomPersona.name,    // Assigns the entire persona object correctly
-                wishlist: [],
-                cartData: {}
-            });
-
-        }
-
-        console.log("150 Users Generated");
-
-        process.exit();
-
+        console.log("Deleted all users with @fake.com")
     }
 
     catch(error){
