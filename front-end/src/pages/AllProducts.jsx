@@ -54,6 +54,8 @@ const AllProducts = () => {
     if (showSearch && search.trim() && resultProducts.length > 0) {
 
     ProductsCopy = resultProducts.map(item => item.product);
+    console.log("COPY", ProductsCopy)
+    console.log("RESULTPRO", resultProducts)
   }
 
     if (category.length > 0) {
