@@ -3,7 +3,6 @@ import mongoose from "mongoose"; // Ensure mongoose connection is established el
 import productModel from "../models/productModel.js";
 import { generateMetadata, create_embeddings } from "../controllers/aiController.js";
 
-const MONGODB_URI = "mongodb+srv://sreeshanth_m:mongodb6@website-cluster.cdgpeor.mongodb.net/commerce?appName=website-cluster"
 
 const migrateProducts = async () => {
     try {
