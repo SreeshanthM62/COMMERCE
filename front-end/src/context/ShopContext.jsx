@@ -294,6 +294,8 @@ const ShopContextProvider = (props) => {
                 setResultProducts(response.data.products)
             }
 
+            console.log("FUNCTION LOG", response.data.products)
+
         } catch (error) {
             console.log(error)
         }
@@ -307,6 +309,7 @@ const ShopContextProvider = (props) => {
     }
 
     const timer = setTimeout(() => {
+        console.log("TIMER LOG")
         searchProducts();
     }, 300);
 

@@ -60,6 +60,7 @@ const AllProducts = () => {
 
     if (category.length > 0) {
       ProductsCopy = ProductsCopy.filter(item => (category.includes(item.category)))
+      console.log("CAT COPY", ProductsCopy)
     }
 
     if (subCategory.length > 0) {
