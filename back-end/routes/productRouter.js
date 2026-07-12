@@ -2,6 +2,7 @@ import express from "express"
 import {addProduct,listProducts,removeProduct,singleProduct,categoryProducts, relatedProducts} from "../controllers/productController.js"
 import upload from "../middleware/multer.js";
 import adminAuth from "../middleware/adminAuth.js";
+import { searchProducts } from "../controllers/searchController.js";
 
 const productRouter = express.Router();
 
@@ -12,6 +13,7 @@ productRouter.get("/list",listProducts)
 productRouter.get("/related-products/:product_id", relatedProducts)
 
 productRouter.get("/category/:category",categoryProducts)
+productRouter.post("/search",searchProducts)
 
 
 

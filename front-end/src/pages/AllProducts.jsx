@@ -9,7 +9,7 @@ import ProductItem from '../components/ProductItem'
 
 const AllProducts = () => {
 
-  const { products, search, showSearch } = useContext(ShopContext)
+  const { products, search, showSearch, resultProducts, searchProducts } = useContext(ShopContext)
 
   const [showFilter, setShowFilter] = useState(false)
   const [filterProducts, setFilterProducts] = useState([])
@@ -24,7 +24,7 @@ const AllProducts = () => {
 
   useEffect(() => {
     applyFilter()
-  }, [category, subCategory, search, showSearch, products])
+  }, [category, subCategory, search, showSearch, products, resultProducts])
 
 
 
@@ -51,18 +51,9 @@ const AllProducts = () => {
   const applyFilter = () => {
     let ProductsCopy = products.slice();
 
-    if (showSearch && search.trim()) {
-    const keywords = search
-      .toLowerCase()
-      .trim()
-      .split(/\s+/);
+    if (showSearch && search.trim() && resultProducts.length > 0) {
 
-    ProductsCopy = ProductsCopy.filter(item => {
-      const searchableText = `${item.name} ${item.description}`
-        .toLowerCase();
-
-      return keywords.every(word => searchableText.includes(word));
-    });
+    ProductsCopy = resultProducts.map(item => item.product);
   }
 
     if (category.length > 0) {

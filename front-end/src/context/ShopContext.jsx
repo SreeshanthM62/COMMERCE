@@ -15,6 +15,7 @@ const ShopContextProvider = (props) => {
     const delivery_fee = 100;
     const backendURL = import.meta.env.VITE_BACKEND_URL
     const [search, setSearch] = useState("")
+    const [resultProducts, setResultProducts] = useState([])
     const [showSearch, setShowSearch] = useState(false)
     const [cartItems, setCartItems] = useState({})
     const [token, setToken] = useState("")
@@ -244,7 +245,7 @@ const ShopContextProvider = (props) => {
 
         try {
             console.log("Token:", token);
-console.log("ProductId:", productId);
+            console.log("ProductId:", productId);
 
             const response = await axios.post(
                 backendURL + "/api/wishlist/toggle-wishlist",
@@ -254,7 +255,7 @@ console.log("ProductId:", productId);
 
             if (response.data.success) {
                 setWishlist(response.data.wishlist)
-                if(isAdding){
+                if (isAdding) {
                     await track(productId, "wishlist", token, backendURL)
                 }
             }
@@ -285,6 +286,35 @@ console.log("ProductId:", productId);
         }
     }
 
+    const searchProducts = async () => {
+        try {
+            const response = await axios.post(backendURL + "/api/product/search", { query: search }, { headers: { Authorization: `Bearer ${token}` } })
+
+            if (response.data.success) {
+                setResultProducts(response.data.products)
+            }
+
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    useEffect(() => {
+
+    if (!search.trim()) {
+        setResultProducts([]);
+        return;
+    }
+
+    const timer = setTimeout(() => {
+        searchProducts();
+    }, 300);
+
+    return () => clearTimeout(timer);
+
+}, [search]);
+
+
 
 
 
@@ -313,6 +343,7 @@ console.log("ProductId:", productId);
     const value = {
         products, currency, delivery_fee,
         search, setSearch, showSearch, setShowSearch,
+        resultProducts, setResultProducts, searchProducts,
         cartItems, addToCart, setCartItems,
         getCartCount,
         updateQuantity,
@@ -322,7 +353,8 @@ console.log("ProductId:", productId);
         token, setToken,
         wishlist, setWishlist,
         toggleWishlist, getWishlist,
-        loading, setLoading
+        loading, setLoading,
+
     }
 
 
