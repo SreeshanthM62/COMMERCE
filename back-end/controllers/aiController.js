@@ -58,24 +58,47 @@ Return this format:
 
 }
 
-export const create_embeddings = async(text)=>{
-    try {
-        const response = await axios.post("http://localhost:11434/api/embed", {
-            "model": "nomic-embed-text",
-            "input": text 
-        });
-
-        
-        if (response.data && response.data.embeddings) {
-            return response.data.embeddings[0]; 
+export const createProductEmbedding = async (text) => {
+    const response = await axios.post(
+        "https://api.jina.ai/v1/embeddings",
+        {
+            model: "jina-embeddings-v4",
+            task: "retrieval.passage",
+            dimensions: 768,
+            late_chunking: false,
+            input: [text]
+        },
+        {
+            headers: {
+                Authorization: `Bearer ${process.env.JINA_API_KEY}`,
+                "Content-Type": "application/json"
+            }
         }
-        
-        throw new Error("Unexpected response structure from Ollama");
-    } catch (error) {
-        console.error("Embedding generation failed:", error.message);
-        throw error;
-    }
-}
+    );
+
+    return response.data.data[0].embedding;
+};
+
+export const createQueryEmbedding = async (query) => {
+    const response = await axios.post(
+        "https://api.jina.ai/v1/embeddings",
+        {
+            model: "jina-embeddings-v4",
+            task: "retrieval.query",
+            dimensions: 768,
+            late_chunking: false,
+            input: [query]
+        },
+        {
+            headers: {
+                Authorization: `Bearer ${process.env.JINA_API_KEY}`,
+                "Content-Type": "application/json"
+            }
+        }
+    );
+
+    return response.data.data[0].embedding;
+};
 
 const searchText = `Product Name:
 Lily Luxe Bouquet
@@ -105,7 +128,7 @@ Search Keywords:
 pink lily bouquet, lily flower arrangement, luxury bouquet, handcrafted flowers, elegant floral gift`
 
 // const run = async()=>{
-//     const result = await create_embeddings(searchText)
+//     const result = await createQueryEmbedding("Colorful bouquets")
 //     console.log("Generated Vector Embedding:", result)
 //     return result;
 // }

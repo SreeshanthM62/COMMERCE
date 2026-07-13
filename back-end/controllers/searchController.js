@@ -1,5 +1,5 @@
 import productModel from "../models/productModel.js";
-import { create_embeddings } from "./aiController.js";
+import { createProductEmbedding, createQueryEmbedding } from "./aiController.js";
 import { cosineSimilarity } from "../utils/cosineSimilarity.js";
 
 export const searchProducts = async (req, res) => {
@@ -7,7 +7,7 @@ export const searchProducts = async (req, res) => {
 
         const { query } = req.body;
 
-        const query_embedding = await create_embeddings(query)
+        const query_embedding = await createQueryEmbedding(query)
         console.log(query_embedding)
         const products = await productModel.find()
 
@@ -29,7 +29,7 @@ export const searchProducts = async (req, res) => {
 
         res.json({
             success: true,
-            products: results.slice(0, 15)
+            products: results.slice(0, 20)
         })
 
     } catch (error) {
