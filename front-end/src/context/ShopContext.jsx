@@ -22,6 +22,7 @@ const ShopContextProvider = (props) => {
     const [products, setProducts] = useState([])
     const [wishlist, setWishlist] = useState([])
     const [loading, setLoading] = useState(false)
+    const [searchLoading, setSearchLoading] = useState(false)
 
     const track = useTrackEvent()
 
@@ -288,6 +289,7 @@ const ShopContextProvider = (props) => {
 
     const searchProducts = async () => {
         try {
+            setSearchLoading(true)
             const response = await axios.post(backendURL + "/api/product/search", { query: search }, { headers: { Authorization: `Bearer ${token}` } })
 
             if (response.data.success) {
@@ -299,6 +301,7 @@ const ShopContextProvider = (props) => {
         } catch (error) {
             console.log(error)
         }
+        setSearchLoading(false)
     }
 
     useEffect(() => {
@@ -357,6 +360,7 @@ const ShopContextProvider = (props) => {
         wishlist, setWishlist,
         toggleWishlist, getWishlist,
         loading, setLoading,
+        searchLoading, setSearchLoading
 
     }
 

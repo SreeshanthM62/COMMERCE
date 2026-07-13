@@ -13,7 +13,7 @@ export default function Loader({ label = "Wrapping something beautiful for you" 
           min-height: 60vh;
           width: 100%;
           padding: 40px 20px;
-          background: radial-gradient(120% 100% at 50% 0%, #fff5f8 0%, #ffe4ef 45%, #ffd3e6 100%);
+          background: transparent;
         }
 
         .ribbon-stage {

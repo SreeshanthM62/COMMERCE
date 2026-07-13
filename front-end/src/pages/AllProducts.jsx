@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { assets } from '../assets/assets'
 import { ShopContext } from '../context/ShopContext'
 import ProductItem from '../components/ProductItem'
+import Loader from '../components/Loader'
 
 
 
@@ -9,7 +10,7 @@ import ProductItem from '../components/ProductItem'
 
 const AllProducts = () => {
 
-  const { products, search, showSearch, resultProducts, searchProducts } = useContext(ShopContext)
+  const { products, search, showSearch, resultProducts, searchProducts, searchLoading } = useContext(ShopContext)
 
   const [showFilter, setShowFilter] = useState(false)
   const [filterProducts, setFilterProducts] = useState([])
@@ -53,10 +54,10 @@ const AllProducts = () => {
 
     if (showSearch && search.trim() && resultProducts.length > 0) {
 
-    ProductsCopy = resultProducts.map(item => item.product);
-    console.log("COPY", ProductsCopy)
-    console.log("RESULTPRO", resultProducts)
-  }
+      ProductsCopy = resultProducts.map(item => item.product);
+      console.log("COPY", ProductsCopy)
+      console.log("RESULTPRO", resultProducts)
+    }
 
     if (category.length > 0) {
       ProductsCopy = ProductsCopy.filter(item => (category.includes(item.category)))
@@ -197,10 +198,10 @@ const AllProducts = () => {
       <div className="flex-1">
         <div className="flex justify-between text-base items-center sm:text-2xl mb-4">
           <div className='flex flex-col justify-center items-center'>
-                <h1 className='font-[Jost] font-bold italic text-[20px] sm:text-[30px] p-5 flex flex-col items-center text-center'>ALL PRODUCTS
-                    <p className="w-[75%] h-[1.5px] bg-black"></p>
-                </h1>
-            </div>
+            <h1 className='font-[Jost] font-bold italic text-[20px] sm:text-[30px] p-5 flex flex-col items-center text-center'>ALL PRODUCTS
+              <p className="w-[75%] h-[1.5px] bg-black"></p>
+            </h1>
+          </div>
 
           {/* Product Sort */}
           <select className="border-2 border-gray-300 mr-3 text-[13px] h-[33px] p-[5px]">
@@ -210,15 +211,23 @@ const AllProducts = () => {
           </select>
         </div>
 
-        <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 gap-y-6 p-4'>
+        {
+          searchLoading ? (
+            <Loader />
+          ) : (
+            <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 gap-y-6 p-4'>
 
-          {
-            filterProducts.map((item, index) => (
-              <ProductItem key={index} id={item._id} image={item.image} name={item.name} price={item.price} />
-            ))
-          }
+              {
+                filterProducts.map((item, index) => (
+                  <ProductItem key={index} id={item._id} image={item.image} name={item.name} price={item.price} />
+                ))
+              }
 
-        </div>
+            </div>
+          )
+        }
+
+
       </div>
 
     </div>
