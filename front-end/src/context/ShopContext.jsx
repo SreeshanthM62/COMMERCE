@@ -215,13 +215,18 @@ const ShopContextProvider = (props) => {
 
                     try {
                         await Promise.all(
-                            Object.entries(mergedCart).map(([itemId, quantity]) =>
-                                axios.post(
+                            Object.entries(mergedCart).map(async ([itemId, quantity]) => {
+                                await axios.post(
+                                    backendURL + "/api/cart/add",
+                                    { itemId },
+                                    { headers: { Authorization: `Bearer ${token}` } }
+                                );
+                                await axios.post(
                                     backendURL + "/api/cart/update",
                                     { itemId, quantity },
                                     { headers: { Authorization: `Bearer ${token}` } }
-                                )
-                            )
+                                );
+                            })
                         );
                     } catch (syncError) {
                         console.log("Cart merge sync failed:", syncError)
@@ -406,9 +411,12 @@ const ShopContextProvider = (props) => {
     useEffect(() => {
         if (token) {
             getUserCart(token);
-            getWishlist(token);
         }
     }, [token]);
+
+     useEffect(() => {
+            getWishlist(token);
+        }, [token]);
 
 
     const value = {
