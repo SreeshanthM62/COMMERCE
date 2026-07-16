@@ -13,9 +13,12 @@ const trackEvent = async (req, res) => {
 
     try {
         const { productId, eventType } = req.body;
-        const { userId } = req.user.id;
+        const userId = req.user.id;
 
         const targetScore = EVENT_SCORES[eventType];
+        if (!targetScore) {
+    return res.json({ success: false, message: "Invalid eventType" });
+} 
 
         await interactionModel.findOneAndUpdate(
             { userId, productId },
