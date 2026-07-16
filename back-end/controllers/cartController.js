@@ -47,10 +47,9 @@ const updateCart = async (req, res) => {
             });
         }
 
-        // ✅ Ensure cartData exists
+       
         let cartData = userData.cartData || {};
 
-        // ✅ UPDATE quantity properly
         cartData[itemId] = quantity;
 
         await userModel.findByIdAndUpdate(

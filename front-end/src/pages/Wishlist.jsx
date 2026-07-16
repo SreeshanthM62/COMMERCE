@@ -6,8 +6,8 @@ import ProductItem from '../components/ProductItem'
 const Wishlist = () => {
 
     const { products, wishlist } = useContext(ShopContext)
-    // console.log(wishlist)
-    console.log(products)
+    
+    
 
 
     const wishlistProducts = products.filter(product => wishlist.includes(product._id))

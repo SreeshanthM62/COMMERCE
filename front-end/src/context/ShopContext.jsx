@@ -120,11 +120,6 @@ const ShopContextProvider = (props) => {
     }
 
 
-    useEffect(() => {
-        if (token) {
-            getUserCart(token)
-        }
-    }, [token])
 
 
 
@@ -217,8 +212,22 @@ const ShopContextProvider = (props) => {
                             mergedCart[item] = guestCart[item];
                         }
                     }
-                    setCartItems(mergedCart);
 
+                    try {
+                        await Promise.all(
+                            Object.entries(mergedCart).map(([itemId, quantity]) =>
+                                axios.post(
+                                    backendURL + "/api/cart/update",
+                                    { itemId, quantity },
+                                    { headers: { Authorization: `Bearer ${token}` } }
+                                )
+                            )
+                        );
+                    } catch (syncError) {
+                        console.log("Cart merge sync failed:", syncError)
+                    }
+
+                    setCartItems(mergedCart);
                     localStorage.removeItem("cartItems")
                 }
                 else {
@@ -237,16 +246,32 @@ const ShopContextProvider = (props) => {
         // Update UI immediately
         const isAdding = !wishlist.includes(productId);
 
+        console.log("wishlist:", wishlist);
+        console.log("isArray:", Array.isArray(wishlist));
+        console.log("type:", typeof wishlist);
+
         // Optimistic UI update
         if (isAdding) {
-            setWishlist([...wishlist, productId]);
+            setWishlist(prev => [...prev, productId]);
         } else {
             setWishlist(wishlist.filter(id => id !== productId));
         }
 
+
+
         try {
-            console.log("Token:", token);
-            console.log("ProductId:", productId);
+
+            if (!token) {
+                const updatedGuestWishlist = isAdding
+                ? [...previousWishlist, productId]
+                : previousWishlist.filter(id => id !== productId);
+
+            localStorage.setItem("guestWishlist", JSON.stringify(updatedGuestWishlist));
+            console.log("Updated guest wishlist in localStorage:", updatedGuestWishlist);
+            return;
+            }
+
+
 
             const response = await axios.post(
                 backendURL + "/api/wishlist/toggle-wishlist",
@@ -258,7 +283,7 @@ const ShopContextProvider = (props) => {
                 setWishlist(response.data.wishlist)
                 if (isAdding) {
                     await track(productId, "wishlist", token, backendURL)
-                }
+                } 
             }
         } catch (error) {
             setWishlist(previousWishlist);
@@ -270,14 +295,54 @@ const ShopContextProvider = (props) => {
     const getWishlist = async (token) => {
         try {
 
+
+            if (!token) {
+                const guestWishlist = JSON.parse(
+                    localStorage.getItem("guestWishlist") || "[]"
+                );
+
+                console.log(localStorage.getItem("guestWishlist"))
+
+                setWishlist(guestWishlist);
+                console.log("GUEST WISHLIST", wishlist)
+                return;
+            }
+            
+
+
             const response = await axios.get(
                 backendURL + "/api/wishlist/get-wishlist",
                 { headers: { Authorization: `Bearer ${token}` } }
             );
 
             if (response.data.success) {
-                setWishlist(response.data.wishlist)
-                console.log(wishlist)
+
+                const dbWishlist = response.data.wishlist || [];
+                const guestWishlist = JSON.parse(localStorage.getItem("guestWishlist") || "[]");
+                const itemsToMerge = guestWishlist.filter(id => !dbWishlist.includes(id));
+
+                if (itemsToMerge.length > 0) {
+                    try {
+                        await Promise.all(
+                            itemsToMerge.map(productId =>
+                                axios.post(
+                                    backendURL + "/api/wishlist/toggle-wishlist",
+                                    { productId },
+                                    { headers: { Authorization: `Bearer ${token}` } }
+                                )
+                            )
+                        );
+                        setWishlist([...dbWishlist, ...itemsToMerge]);
+                    } catch (syncError) {
+                        console.log("Wishlist merge sync failed:", syncError)
+                        setWishlist(dbWishlist);
+                    }
+                    localStorage.removeItem("guestWishlist");
+                }
+                else {
+                    setWishlist(dbWishlist);
+                }
+
             }
 
 
@@ -306,19 +371,19 @@ const ShopContextProvider = (props) => {
 
     useEffect(() => {
 
-    if (!search.trim()) {
-        setResultProducts([]);
-        return;
-    }
+        if (!search.trim()) {
+            setResultProducts([]);
+            return;
+        }
 
-    const timer = setTimeout(() => {
-        console.log("TIMER LOG")
-        searchProducts();
-    }, 300);
+        const timer = setTimeout(() => {
+            console.log("TIMER LOG")
+            searchProducts();
+        }, 300);
 
-    return () => clearTimeout(timer);
+        return () => clearTimeout(timer);
 
-}, [search]);
+    }, [search]);
 
 
 
@@ -341,7 +406,7 @@ const ShopContextProvider = (props) => {
     useEffect(() => {
         if (token) {
             getUserCart(token);
-            getWishlist(token)
+            getWishlist(token);
         }
     }, [token]);
 
