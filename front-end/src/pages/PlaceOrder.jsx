@@ -385,9 +385,9 @@ const PlaceOrder = () => {
 
             {/* Place order */}
 
-            {/* <button type="submit" className="bg-black text-white cursor-pointer px-10 py-3 text-sm">
+            <button type="submit" className="bg-black text-white cursor-pointer px-10 py-3 text-sm">
               PLACE ORDER
-            </button> */}
+            </button>
 
           </div>
 
